@@ -1,0 +1,24 @@
+name: deploy-prod-merged
+on:
+  pull_request:
+    types: closed
+    branches:
+      - master
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: PR to master branch merged?
+      uses: actions/github-script@0.9.0
+      env:
+        PRODUCTION_BRANCH: master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const pr = context.payload.pull_request
+          if (!(pr.merged && pr.base.ref === process.env.PRODUCTION_BRANCH)) return;
+
+    - id: hello
+      run: echo "hello merge master"

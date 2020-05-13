@@ -1,0 +1,13 @@
+name: deploy-prod-master
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+
+    steps:
+    - id: hello
+      run: echo "hello push master"
